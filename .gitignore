@@ -1,0 +1,4 @@
+/assinaturas.sqlite3
+/par_chaves.sqlite3
+vendor/
+coverage/
