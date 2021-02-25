@@ -2,3 +2,8 @@
 /par_chaves.sqlite3
 vendor/
 coverage/
+.phpunit.result.cache
+.scannerwork/
+phpunit.coverage.xml
+phpunit.report.xml
+
