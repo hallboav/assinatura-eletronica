@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AssinaturaEletronica\Tests\Implementacao\OpenSSL\VerificadorAssinatura;
 
@@ -57,8 +57,8 @@ CHAVE_PUBLICA;
 
         $verificador = new VerificadorAssinaturaOpenSslAdapter($chavePublica, 'baz');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Falha ao verificar assinatura.');
+        $this->expectWarning();
+        $this->expectWarningMessage('openssl_verify(): Unknown digest algorithm');
 
         $verificador->verificarAssinatura('foo', 'sig');
     }

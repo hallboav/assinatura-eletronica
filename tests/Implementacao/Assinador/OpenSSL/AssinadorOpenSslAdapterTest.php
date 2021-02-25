@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AssinaturaEletronica\Tests\Implementacao\Assinador\OpenSsl;
 
 use AssinaturaEletronica\Implementacao\Assinador\OpenSSL\AssinadorOpenSslAdapter;
+use AssinaturaEletronica\Implementacao\Exception\ChavePrivadaException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,6 +41,7 @@ CHAVE_PRIVADA;
 
     /**
      * @covers AssinaturaEletronica\Implementacao\Assinador\OpenSSL\AssinadorOpenSslAdapter
+     * @covers AssinaturaEletronica\Implementacao\Exception\ChavePrivadaException
      */
     public function testAssinarComChavePrivadaIncorreta()
     {
@@ -51,7 +53,7 @@ CHAVE_PRIVADA;
 
         $assinador = new AssinadorOpenSslAdapter($chavePrivada);
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(ChavePrivadaException::class);
         $this->expectExceptionMessage('Falha ao carregar chave privada.');
 
         $assinador->assinar('foo');
@@ -77,8 +79,8 @@ CHAVE_PRIVADA;
 
         $assinador = new AssinadorOpenSslAdapter($chavePrivada, null, 'foo');
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Falha ao assinar.');
+        $this->expectWarning();
+        $this->expectWarningMessage('openssl_sign(): Unknown digest algorithm');
 
         $assinador->assinar('foo');
     }

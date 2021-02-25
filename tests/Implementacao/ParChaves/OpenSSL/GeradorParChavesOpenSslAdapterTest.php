@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AssinaturaEletronica\Tests\Implementacao\ParChaves\OpenSSL;
 
@@ -26,8 +26,8 @@ class GeradorParChavesOpenSslAdapterTest extends TestCase
     {
         $geradorParChaves = new GeradorParChavesOpenSslAdapter(['private_key_bits' => 0]);
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Falha ao gerar par de chaves.');
+        $this->expectWarning();
+        $this->expectWarningMessage('openssl_pkey_new(): Private key length must be at least 384 bits, configured to 0');
 
         $geradorParChaves->gerar();
     }
